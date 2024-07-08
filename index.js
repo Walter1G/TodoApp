@@ -2,41 +2,40 @@ const todoForm = document.querySelector("form");
 const todoInput = document.getElementById("todo-input");
 const todoListUl = document.getElementById("todo-list");
 
-let allTodos = [];
+let allTodos = getTodos();
+updateTodoList();
 
-todoForm.addEventListener("submit", function(e) {
+todoForm.addEventListener("submit", function (e) {
   e.preventDefault();
-    addTodo();
+  addTodo();
 });
 
 function addTodo() {
-    const todoText = todoInput.value.trim();
+  const todoText = todoInput.value.trim();
 
-    if (todoText.length > 5) {
-        allTodos.push(todoText);
-        todoInput.value = "";
-        updateTodoList()
-        saveTodos()
-        // createTodoItem(todoText);
-
-    } else {
-        alert('not less than 5 characters');
-    }
-
+  if (todoText.length > 5) {
+    allTodos.push(todoText);
+    todoInput.value = "";
+    updateTodoList();
+    saveTodos();
+    // createTodoItem(todoText);
+  } else {
+    alert("not less than 5 characters");
+  }
 }
 
 function updateTodoList() {
-    todoListUl.innerHTML = "";
-    allTodos.forEach((todo, todoIndex) => {
-        todoItem = createTodoItem(todo, todoIndex);
-        todoListUl.append(todoItem);
-    })
+  todoListUl.innerHTML = "";
+  allTodos.forEach((todo, todoIndex) => {
+    todoItem = createTodoItem(todo, todoIndex);
+    todoListUl.append(todoItem);
+  });
 }
 
 function createTodoItem(todo, todoIndex) {
-    const todoItem = document.createElement("li");
-    todoItem.className="todo";
-    todoItem.innerHTML = `
+  const todoItem = document.createElement("li");
+  todoItem.className = "todo";
+  todoItem.innerHTML = `
 
                 <input type="checkbox" id='todo-${todoIndex}'>
                 <label for='todo-${todoIndex}' class="custom-checkbox">
@@ -58,16 +57,16 @@ function createTodoItem(todo, todoIndex) {
           
     
     `;
-    return todoItem;
-   
- }
-
+  return todoItem;
+}
 
 function saveTodos() {
-
-    const todoJson = JSON.stringify(allTodos)
-     localStorage.setItem('todos', todoJson)
+  const todoJson = JSON.stringify(allTodos);
+  localStorage.setItem("todos", todoJson);
 }
- 
 
-
+function getTodos() {
+  const todosJson = localStorage.getItem("todos") || "[]";
+  todos = JSON.parse(todosJson);
+  return todos;
+}
