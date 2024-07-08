@@ -16,6 +16,7 @@ function addTodo() {
         allTodos.push(todoText);
         todoInput.value = "";
         updateTodoList()
+        saveTodos()
         // createTodoItem(todoText);
 
     } else {
@@ -60,5 +61,13 @@ function createTodoItem(todo, todoIndex) {
     return todoItem;
    
  }
+
+
+function saveTodos() {
+
+    const todoJson = JSON.stringify(allTodos)
+     localStorage.setItem('todos', todoJson)
+}
+ 
 
 
